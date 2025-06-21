@@ -10,9 +10,9 @@ def main():
     pygame.init()
 
     # create a screen
-    pygame.display.set_caption("Cool Project")
-    # TODO: Change the size of the screen as you see fit!
-    screen = pygame.display.set_mode((640, 480))
+    pygame.display.set_caption("Flappy Bird")
+    # TODOne: Change the size of the screen as you see fit!
+    screen = pygame.display.set_mode((1200, 620))
     # creates a Character from the my_character.py file
     character = my_character.Character(screen, 100, 100)
 
@@ -24,10 +24,7 @@ def main():
             if event.type == pygame.QUIT:
                 sys.exit()
 
-            # TODO: Add you events code
-
-        # TODO: Fill the screen with whatever background color you like!
-        screen.fill((255, 255, 255))
+            screen.fill((25, 255, 255))
 
         # draws the character every frame
         character.draw()
