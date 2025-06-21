@@ -3,11 +3,11 @@ import sys
 
 
 class Character:
-    def __init__(self, screen: pygame.Surface, x, y,bird):
+    def __init__(self, screen: pygame.Surface, x, y,bird_image_filename):
         self.screen = screen
         self.x = x
         self.y = y
-        self.bird = pygame.image.load("pink_bird.png")
+        self.bird = pygame.image.load(bird_image_filename)
 
     def draw(self):
         current_image = self.bird.copy()
@@ -17,7 +17,7 @@ class Character:
 # change it to properly test that class
 def test_character():
     # TODO: change this function to test your class
-    screen = pygame.display.set_mode((640, 480))
+    screen = pygame.display.set_mode((1200, 620))
     character = Character(screen, 400, 400)
     while True:
         for event in pygame.event.get():
@@ -27,6 +27,7 @@ def test_character():
         screen.fill("white")
         character.draw()
         pygame.display.update()
+    bird = Bird(screen, 200, 400, "pink_bird.png")
 
 
 # Testing the classes
