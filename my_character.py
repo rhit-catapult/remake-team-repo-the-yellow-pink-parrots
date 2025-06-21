@@ -3,17 +3,15 @@ import sys
 
 
 class Character:
-    def __init__(self, screen: pygame.Surface, x, y):
+    def __init__(self, screen: pygame.Surface, x, y,bird):
         self.screen = screen
         self.x = x
         self.y = y
+        self.bird = pygame.image.load("pink_bird.png")
 
     def draw(self):
-        pygame.draw.rect(self.screen, "blue", (self.x, self.y, 20, 20))
-        pygame.draw.circle(self.screen, "red", (self.x + 5, self.y + 5), 3)
-        pygame.draw.circle(self.screen, "red", (self.x + 15, self.y + 5), 3)
-
-
+        current_image = self.bird.copy()
+        self.screen.blit(current_image, (self.x, self.y))
 # This function is called when you run this file, and is used to test the Character class individually.
 # When you create more files with different classes, copy the code below, then
 # change it to properly test that class
