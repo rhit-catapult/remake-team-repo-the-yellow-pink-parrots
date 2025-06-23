@@ -11,7 +11,7 @@ pipe_gap = 150
 pipe_speed = 5
 
 
-RED = (255, 0, 0)
+DARK_BLUE = ((0, 0, 139))
 WHITE = (255, 255, 255)
 BLUE = (135, 206, 250)
 GREEN = (0, 255, 0)
@@ -36,8 +36,8 @@ class Bird:
 def draw_pipes(screen, x, height):
     bottom_pipe = pygame.Rect(x, height + pipe_gap, 60, HEIGHT)
     top_pipe = pygame.Rect(x, 0, 60, height)
-    pygame.draw.rect(screen, RED, bottom_pipe)
-    pygame.draw.rect(screen, RED, top_pipe)
+    pygame.draw.rect(screen, GREEN, bottom_pipe)
+    pygame.draw.rect(screen, GREEN, top_pipe)
     return top_pipe, bottom_pipe
 
 def check_collision(bird, pipes):
@@ -76,13 +76,13 @@ def main():
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
                     bird_movement = -8
             else:
-                if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+                if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
                     bird.y = HEIGHT // 2
                     pipe_x = WIDTH
                     pipe_height = random.randint(150, 450)
                     score = 0
                     bird_movement = 0
-                    game_active = True
+                    game_active = True #restarts game when space is entered/
 
 
 
@@ -105,13 +105,15 @@ def main():
             bird.draw()
             game_active = check_collision(bird, pipes)
 
-            score_text = font.render(f"Score: {score}", True, BLACK)
+            score_text = font.render(f"Score: {score}", True, DARK_BLUE)
             screen.blit(score_text, (10, 10))
         else:
-            game_over_text = font.render("Game Over!", True, BLACK)
+            game_over_text = font.render("GRASS HOLE!", True, DARK_BLUE)
             screen.blit(game_over_text, (WIDTH // 2 - 100, HEIGHT // 2 - 40))
-            restart_text = font.render("Press Enter to Restart", True, BLACK)
+            restart_text = font.render("Press Enter to Restart", True, DARK_BLUE)
             screen.blit(restart_text, (WIDTH // 2 - 150, HEIGHT // 2 + 10))
+            game_over_text = font.render(f"Score: {score}", True, DARK_BLUE)
+            screen.blit(game_over_text, (WIDTH // 2 - 20, HEIGHT // 2 +50 ))
             bird.draw()
 
         pygame.display.update()
