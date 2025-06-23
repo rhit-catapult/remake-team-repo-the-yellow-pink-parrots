@@ -49,22 +49,6 @@ def check_collision(bird, pipes):
         return False
     return True
 
-def draw_pipes2(screen, x, height):
-    bottom_pipe2 = pygame.Rect(x, height + pipe_gap, 60, HEIGHT)
-    top_pipe2 = pygame.Rect(x, 0, 60, height)
-    pygame.draw.rect(screen, GREEN, bottom_pipe2)
-    pygame.draw.rect(screen, GREEN, top_pipe2)
-    return top_pipe2, bottom_pipe2
-
-def check_collision(bird, pipes):
-    bird_rect = bird.get_rect()
-    for pipe in pipes:
-        if bird_rect.colliderect(pipe):
-            return False
-    if bird_rect.top <= 0 or bird_rect.bottom >= HEIGHT:
-        return False
-    return True
-
 
 def main():
     pygame.init()
@@ -81,7 +65,6 @@ def main():
 
     pipe_x = WIDTH
     pipe_height = random.randint(150, 450)
-    pipe_height_2 = random.randint(150, 450)
 
     while True:
         pressed_keys = pygame.key.get_pressed()
@@ -116,7 +99,7 @@ def main():
             pipe_x -= pipe_speed
             if pipe_x + 160 < 0:
                 pipe_x = WIDTH
-                pipe_height_2 = random.randint(150, 450)
+                pipe_height = random.randint(150, 450)
                 score += 1
 
             pipes = draw_pipes(screen, pipe_x, pipe_height)
