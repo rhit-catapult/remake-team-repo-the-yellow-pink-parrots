@@ -3,6 +3,7 @@ import sys
 import random
 import time
 
+
 WIDTH, HEIGHT = 1200, 620
 BIRD_SIZE = 60
 gravity = 0.5
