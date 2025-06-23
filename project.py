@@ -49,7 +49,6 @@ def check_collision(bird, pipes):
         return False
     return True
 
-
 def main():
     pygame.init()
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
