@@ -1,7 +1,5 @@
 import pygame
 import sys
-import random
-
 
 WIDTH, HEIGHT = 1200, 620
 BIRD_SIZE = 60
