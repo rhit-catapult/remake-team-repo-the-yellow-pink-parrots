@@ -1,16 +1,21 @@
 import pygame
 import sys
 import random
+import time
 
 WIDTH, HEIGHT = 1200, 620
 BIRD_SIZE = 60
 gravity = 0.5
 pipe_gap = 150
-pipe_speed = 4
+pipe_speed = 5
 
+RED = (255, 0, 0)
 WHITE = (255, 255, 255)
 BLUE = (135, 206, 250)
 GREEN = (0, 255, 0)
+BLACK = (0, 0, 0)
+BACKROUND = pygame.image.load("rose_background.png")
+BACKROUND = pygame.transform.scale(BACKROUND, (1200, 620))
 
 class Bird:
     def __init__(self, screen, x, y, bird_image1):
@@ -29,8 +34,8 @@ class Bird:
 def draw_pipes(screen, x, height):
     bottom_pipe = pygame.Rect(x, height + pipe_gap, 60, HEIGHT)
     top_pipe = pygame.Rect(x, 0, 60, height)
-    pygame.draw.rect(screen, GREEN, bottom_pipe)
-    pygame.draw.rect(screen, GREEN, top_pipe)
+    pygame.draw.rect(screen, RED, bottom_pipe)
+    pygame.draw.rect(screen, RED, top_pipe)
     return top_pipe, bottom_pipe
 
 def check_collision(bird, pipes):
@@ -75,7 +80,7 @@ def main():
                     bird_movement = 0
                     game_active = True
 
-        screen.fill(BLUE)
+        screen.blit(BACKROUND, (0, 0))
 
         if game_active:
             bird_movement += gravity
@@ -91,12 +96,12 @@ def main():
             bird.draw()
             game_active = check_collision(bird, pipes)
 
-            score_text = font.render(f"Score: {score}", True, WHITE)
+            score_text = font.render(f"Score: {score}", True, BLACK)
             screen.blit(score_text, (10, 10))
         else:
-            game_over_text = font.render("Game Over!", True, WHITE)
+            game_over_text = font.render("Game Over!", True, BLACK)
             screen.blit(game_over_text, (WIDTH // 2 - 100, HEIGHT // 2 - 40))
-            restart_text = font.render("Press SPACE to Restart", True, WHITE)
+            restart_text = font.render("Press SPACE to Restart", True, BLACK)
             screen.blit(restart_text, (WIDTH // 2 - 150, HEIGHT // 2 + 10))
             bird.draw()
 
