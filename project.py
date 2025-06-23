@@ -3,12 +3,13 @@ import sys
 import random
 import time
 
-
+start_enter = 0
 WIDTH, HEIGHT = 1200, 620
 BIRD_SIZE = 60
-gravity = 0.5
+gravity = 0 + (start_enter)
 pipe_gap = 150
 pipe_speed = 5
+
 
 RED = (255, 0, 0)
 WHITE = (255, 255, 255)
@@ -60,10 +61,12 @@ def main():
     game_active = True
     score = 0
 
+
     pipe_x = WIDTH
     pipe_height = random.randint(150, 450)
 
     while True:
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -80,6 +83,10 @@ def main():
                     score = 0
                     bird_movement = 0
                     game_active = True
+
+            pressed_keys = pygame.key.get_pressed()
+            if pressed_keys[pygame.K_SPACE]:
+                start_enter = 0.5
 
         screen.blit(BACKROUND, (0, 0))
 
