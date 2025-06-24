@@ -1,24 +1,26 @@
 import pygame
 import sys
 import random
-import time
 
-
-
+# Game Constants
 WIDTH, HEIGHT = 1200, 620
 BIRD_SIZE = 60
 gravity = 0.5
 pipe_gap = 150
 pipe_speed = 5
 
-
-DARK_BLUE = ((0, 0, 139))
-WHITE = (255, 255, 255)
-BLUE = (135, 206, 250)
+# Colors
+DARK_BLUE = (0, 0, 139)
 GREEN = (0, 255, 0)
-BLACK = (0, 0, 0)
-BACKROUND = pygame.image.load("rose_background.png")
-BACKROUND = pygame.transform.scale(BACKROUND, (1200, 620))
+
+# Load Background and Images
+BACKGROUND = pygame.image.load("rose_background.png")
+BACKGROUND = pygame.transform.scale(BACKGROUND, (WIDTH, HEIGHT))
+EMMET1 = pygame.image.load("emmet1.png")
+EMMET2 = pygame.image.load("emmet2.png")
+EMMET1 = pygame.transform.scale(EMMET1, (300, 300))
+EMMET2 = pygame.transform.scale(EMMET2, (300, 300))
+
 
 class Bird:
     def __init__(self, screen, x, y, bird_image1):
@@ -33,6 +35,7 @@ class Bird:
 
     def get_rect(self):
         return pygame.Rect(self.x, self.y, BIRD_SIZE, BIRD_SIZE)
+
 
 def draw_pipes(screen, x, height):
     bottom_pipe = pygame.Rect(x, height + pipe_gap, 60, HEIGHT)
@@ -62,12 +65,10 @@ def main():
     game_active = True
     score = 0
 
-
     pipe_x = WIDTH
     pipe_height = random.randint(150, 450)
 
     while True:
-        pressed_keys = pygame.key.get_pressed()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -83,21 +84,16 @@ def main():
                     pipe_height = random.randint(150, 450)
                     score = 0
                     bird_movement = 0
-                    game_active = True #restarts game when space is entered/
+                    game_active = True
 
-
-
-        screen.blit(BACKROUND, (0, 0))
+        screen.blit(BACKGROUND, (0, 0))
 
         if game_active:
             bird_movement += gravity
             bird.y += int(bird_movement)
-        if game_active:
-            if pressed_keys[pygame.K_SPACE]:
-                start_enter = 0.5
-
             pipe_x -= pipe_speed
-            if pipe_x + 160 < 0:
+
+            if pipe_x + 60 < 0:
                 pipe_x = WIDTH
                 pipe_height = random.randint(150, 450)
                 score += 1
@@ -109,53 +105,21 @@ def main():
             score_text = font.render(f"Score: {score}", True, DARK_BLUE)
             screen.blit(score_text, (10, 10))
         else:
-            game_over_text = font.render("GRASS HOLE!", True, DARK_BLUE)
-            screen.blit(game_over_text, (WIDTH // 2 - 100, HEIGHT // 2 - 40))
-            restart_text = font.render("Press Enter to Restart", True, DARK_BLUE)
-            screen.blit(restart_text, (WIDTH // 2 - 150, HEIGHT // 2 + 10))
-            game_over_text = font.render(f"Score: {score}", True, DARK_BLUE)
-            screen.blit(game_over_text, (WIDTH // 2 - 20, HEIGHT // 2 +50 ))
+            # Show Game Over Text
+            label_game_over = font.render("GRASS HOLE!", True, DARK_BLUE)
+            label_restart = font.render("Press Enter to Restart", True, DARK_BLUE)
+            label_score = font.render(f"Score: {score}", True, DARK_BLUE)
+
+            screen.blit(label_game_over, (WIDTH // 2 - 100, HEIGHT // 2 - 60))
+            screen.blit(label_restart, (WIDTH // 2 - 180, HEIGHT // 2 - 10))
+            screen.blit(label_score, (WIDTH // 2 - 60, HEIGHT // 2 + 40))
+
             bird.draw()
+            screen.blit(EMMET1, (bird.x - 250, bird.y - 300))
+            screen.blit(EMMET2, (bird.x + 550, bird.y - 300))
 
         pygame.display.update()
         clock.tick(60)
 
 
-
 main()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-grass = pygame.image.load("grass_for_flappy.png") #high up
-
-grass = pygame.transform.scale(grass, (IMAGE_SIZE_X, IMAGE_SIZE_Y))
-
-
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            sys.exit()
-    screen.blit(image1, (0, 0))
