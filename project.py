@@ -4,6 +4,7 @@ import random
 import time
 
 
+
 WIDTH, HEIGHT = 1200, 620
 BIRD_SIZE = 60
 gravity = 0.5
@@ -122,3 +123,39 @@ def main():
 
 
 main()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+grass = pygame.image.load("grass_for_flappy.png") #high up
+
+grass = pygame.transform.scale(grass, (IMAGE_SIZE_X, IMAGE_SIZE_Y))
+
+
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            sys.exit()
+    screen.blit(image1, (0, 0))

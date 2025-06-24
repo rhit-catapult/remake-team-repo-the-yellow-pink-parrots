@@ -10,4 +10,4 @@ class top_obstacle :
         self.y = y
 class bottom_obstacle:
     def __init__(self,screen,x,y):
-pass
+        pass
