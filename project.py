@@ -69,6 +69,7 @@ def main():
     pipe_x = WIDTH
     pipe_height = random.randint(150, 450)
 
+
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:

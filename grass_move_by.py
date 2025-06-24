@@ -17,9 +17,8 @@ class grass:
 
 
     def move(self):
-        """ Move the self.y value of the Raindrop down the screen (y increase) at the self.speed. """
-        # TODO 11: Change the  y  position of this Raindrop by its speed.
-        self.x = self.x + self.speed
+
+        self.x = self.x - self.speed
 
     def off_screen(self):
         """ Returns true if the Raindrop y value is not shown on the screen, otherwise false. """
@@ -33,4 +32,4 @@ class grass:
         # TODO 9: Draw a vertical line that is 5 pixels long, 2 pixels thick,
         #      from the current position of this Raindrop (use either a black or blue color).
         image1 = pygame.image.load("grass_for_flappy.png")
-        screen.blit(image1, (0,0))
+        screen.blit(image1, (900,400))
