@@ -2,6 +2,7 @@ import pygame
 import sys
 import random
 
+
 # Game Constants
 WIDTH, HEIGHT = 1200, 620
 BIRD_SIZE = 60
@@ -70,6 +71,7 @@ def main():
 
     pipe_x = WIDTH
     pipe_height = random.randint(150, 450)
+
 
     while True:
         for event in pygame.event.get():
