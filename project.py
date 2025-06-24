@@ -44,7 +44,6 @@ def draw_pipes(screen, x, height):
     pygame.draw.rect(screen, GREEN, top_pipe)
     return top_pipe, bottom_pipe
 
-
 def check_collision(bird, pipes):
     bird_rect = bird.get_rect()
     for pipe in pipes:
@@ -53,7 +52,6 @@ def check_collision(bird, pipes):
     if bird_rect.top <= 0 or bird_rect.bottom >= HEIGHT:
         return False
     return True
-
 
 def main():
     pygame.init()
