@@ -1,21 +1,20 @@
 import pygame
 import sys
 import random
-from grass_move_by import grass
 
-# Game Constants
 WIDTH, HEIGHT = 1200, 620
 BIRD_SIZE = 60
 gravity = 0.5
 pipe_gap = 150
 pipe_speed = 5
 
-# Colors
 DARK_BLUE = (0, 0, 139)
 GREEN = (0, 255, 0)
 WHITE = (255, 255, 255)
 
-# Load Background and Images
+pygame.init()
+pygame.mixer.init()
+
 BACKGROUND = pygame.image.load("rose_background.png")
 BACKGROUND = pygame.transform.scale(BACKGROUND, (WIDTH, HEIGHT))
 EMMET1 = pygame.image.load("emmet1.png")
@@ -24,6 +23,9 @@ EMMET1 = pygame.transform.scale(EMMET1, (300, 300))
 EMMET2 = pygame.transform.scale(EMMET2, (300, 300))
 BUBBLE = pygame.image.load("speech_bubble.png")
 BUBBLE = pygame.transform.scale(BUBBLE, (500, 500))
+
+FLAP = pygame.mixer.Sound("flap.wav")
+DIE = pygame.mixer.Sound("die.wav")
 
 
 class Bird:
@@ -48,6 +50,7 @@ def draw_pipes(screen, x, height):
     pygame.draw.rect(screen, GREEN, top_pipe)
     return top_pipe, bottom_pipe
 
+
 def check_collision(bird, pipes):
     bird_rect = bird.get_rect()
     for pipe in pipes:
@@ -57,8 +60,8 @@ def check_collision(bird, pipes):
         return False
     return True
 
+
 def main():
-    pygame.init()
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
     pygame.display.set_caption("Flappy Bird")
     clock = pygame.time.Clock()
@@ -72,7 +75,6 @@ def main():
     pipe_x = WIDTH
     pipe_height = random.randint(150, 450)
 
-
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -82,6 +84,7 @@ def main():
             if game_active:
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
                     bird_movement = -8
+                    FLAP.play()
             else:
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
                     bird.y = HEIGHT // 2
@@ -105,12 +108,17 @@ def main():
 
             pipes = draw_pipes(screen, pipe_x, pipe_height)
             bird.draw()
+
+            was_active = game_active
             game_active = check_collision(bird, pipes)
+            if was_active and not game_active:
+                DIE.play()
 
             score_text = font.render(f"Score: {score}", True, WHITE)
             screen.blit(score_text, (10, 10))
+
         else:
-            # Show Game Over Text
+            # Game over screen
             label_game_over = font.render("GRASS HOLE!", True, WHITE)
             label_restart = font.render("Press Enter to Restart", True, WHITE)
             label_score = font.render(f"Score: {score}", True, WHITE)
@@ -122,7 +130,7 @@ def main():
             bird.draw()
             screen.blit(EMMET1, (150, 510))
             screen.blit(EMMET2, (900, 150))
-            screen.blit(BUBBLE,(350,100))
+            screen.blit(BUBBLE, (350, 100))
 
         pygame.display.update()
         clock.tick(60)
