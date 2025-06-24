@@ -12,6 +12,7 @@ pipe_speed = 5
 # Colors
 DARK_BLUE = (0, 0, 139)
 GREEN = (0, 255, 0)
+WHITE = (255, 255, 255)
 
 # Load Background and Images
 BACKGROUND = pygame.image.load("rose_background.png")
@@ -20,6 +21,8 @@ EMMET1 = pygame.image.load("emmet1.png")
 EMMET2 = pygame.image.load("emmet2.png")
 EMMET1 = pygame.transform.scale(EMMET1, (300, 300))
 EMMET2 = pygame.transform.scale(EMMET2, (300, 300))
+BUBBLE = pygame.image.load("speech_bubble.png")
+BUBBLE = pygame.transform.scale(BUBBLE, (500, 500))
 
 
 class Bird:
@@ -102,21 +105,22 @@ def main():
             bird.draw()
             game_active = check_collision(bird, pipes)
 
-            score_text = font.render(f"Score: {score}", True, DARK_BLUE)
+            score_text = font.render(f"Score: {score}", True, WHITE)
             screen.blit(score_text, (10, 10))
         else:
             # Show Game Over Text
-            label_game_over = font.render("GRASS HOLE!", True, DARK_BLUE)
-            label_restart = font.render("Press Enter to Restart", True, DARK_BLUE)
-            label_score = font.render(f"Score: {score}", True, DARK_BLUE)
+            label_game_over = font.render("GRASS HOLE!", True, WHITE)
+            label_restart = font.render("Press Enter to Restart", True, WHITE)
+            label_score = font.render(f"Score: {score}", True, WHITE)
 
             screen.blit(label_game_over, (WIDTH // 2 - 100, HEIGHT // 2 - 60))
             screen.blit(label_restart, (WIDTH // 2 - 180, HEIGHT // 2 - 10))
             screen.blit(label_score, (WIDTH // 2 - 60, HEIGHT // 2 + 40))
 
             bird.draw()
-            screen.blit(EMMET1, (bird.x - 250, bird.y - 300))
-            screen.blit(EMMET2, (bird.x + 550, bird.y - 300))
+            screen.blit(EMMET1, (150, 510))
+            screen.blit(EMMET2, (900, 150))
+            screen.blit(BUBBLE,(350,100))
 
         pygame.display.update()
         clock.tick(60)
