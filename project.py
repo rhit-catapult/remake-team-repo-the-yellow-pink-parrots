@@ -85,7 +85,7 @@ def main():
 
             if game_active:
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
-                    bird_movement = -8
+                    bird_movement = -9
                     FLAP.play()
             else:
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
@@ -136,10 +136,9 @@ def main():
 
         pygame.display.update()
         clock.tick(60)
-def sub() :
-    pass
+
 
 
 
 main()
-sub()
+
