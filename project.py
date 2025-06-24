@@ -1,7 +1,7 @@
 import pygame
 import sys
 import random
-
+from grass_move_by import grass
 
 # Game Constants
 WIDTH, HEIGHT = 1200, 620
