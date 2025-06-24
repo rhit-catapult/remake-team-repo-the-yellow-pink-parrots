@@ -2,29 +2,21 @@ import pygame
 import sys
 import random
 import time
-screen = pygame.display.set_mode((1200,620))
-BIRD_SIZE = 60
-gravity = 0.5
-pipe_gap = 150
-pipe_speed = 5
-
-# Colors
-DARK_BLUE = (0, 0, 139)
-GREEN = (0, 255, 0)
-WHITE = (255, 255, 255)
-screen = pygame.display.set_mode((1000, 600))
 
 
 def main():
     pygame.init()
 
-    # Let's create a caption for the game window
-    pygame.display.set_caption("Hello World")
 
-    screen = pygame.display.set_mode((1000, 600))
+    pygame.display.set_caption("Hello World")
+    x = 900
+
+    screen = pygame.display.set_mode((1200, 620))
     # TODO 05: Change the window size, make sure your circle code still works.
     while True:
         screen.fill((255, 255, 255))
+        image1 = pygame.image.load("grass_for_flappy.png")
+        screen.blit(image1, (x , 580))
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit()
@@ -56,14 +48,14 @@ class grass:
         # Note: this will be used for testing, but not used in the final version of the code for the sake of simplicity.
         # TODO 13: Return  True  if the  y  position of this Raindrop is greater than 800.
         image_length = 394
-        return self.x < self.screen.get.length + (image_length)()
+        return self.x < 0 + image_length
 
     def draw(self):
         """ Draws this sprite onto the screen. """
         # TODO 9: Draw a vertical line that is 5 pixels long, 2 pixels thick,
         #      from the current position of this Raindrop (use either a black or blue color).
         image1 = pygame.image.load("grass_for_flappy.png")
-        screen.blit(image1, (900,400))
+        self.screen.blit(image1, (900,580))
 
 
 

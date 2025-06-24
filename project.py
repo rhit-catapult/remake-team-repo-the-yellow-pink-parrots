@@ -1,6 +1,8 @@
 import pygame
 import sys
 import random
+from grass_move_by import grass
+
 
 WIDTH, HEIGHT = 1200, 620
 BIRD_SIZE = 60
@@ -134,6 +136,10 @@ def main():
 
         pygame.display.update()
         clock.tick(60)
+def sub() :
+    pass
+
 
 
 main()
+sub()
