@@ -5,7 +5,8 @@ from grass_move_by import Grass
 
 
 WIDTH, HEIGHT = 1200, 620
-BIRD_SIZE = 60
+BIRD_SIZE_x = 30
+BIRD_SIZE_y = 21
 gravity = 0.5
 pipe_gap = 150
 pipe_speed = 5
@@ -70,13 +71,13 @@ class Bird:
         self.x = x
         self.y = y
         self.image = pygame.image.load(bird_image1)
-        self.image = pygame.transform.scale(self.image, (BIRD_SIZE, BIRD_SIZE))
+        self.image = pygame.transform.scale(self.image, (BIRD_SIZE_x, BIRD_SIZE_y))
 
     def draw(self):
         self.screen.blit(self.image, (self.x, self.y))
 
     def get_rect(self):
-        return pygame.Rect(self.x, self.y, BIRD_SIZE, BIRD_SIZE)
+        return pygame.Rect(self.x, self.y, BIRD_SIZE_x, BIRD_SIZE_y)
 
 
 def draw_pipes(screen, x, height):
