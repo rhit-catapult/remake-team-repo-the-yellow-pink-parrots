@@ -25,6 +25,7 @@ EMMET1 = pygame.transform.scale(EMMET1, (300, 300))
 EMMET2 = pygame.transform.scale(EMMET2, (300, 300))
 BUBBLE = pygame.image.load("speech_bubble.png")
 BUBBLE = pygame.transform.scale(BUBBLE, (500, 500))
+TITLE_BIRD = pygame.image.load("pink_bird.png")
 
 FLAP = pygame.mixer.Sound("flap.wav")
 DIE = pygame.mixer.Sound("die.wav")
@@ -71,7 +72,8 @@ def main():
 
     bird = Bird(screen, 310, HEIGHT // 2, "pink_bird.png")
     bird_movement = 0
-    game_active = True
+    game_active = False
+    start_screen = True
     score = 0
 
     pipe_x = WIDTH
@@ -83,7 +85,11 @@ def main():
                 pygame.quit()
                 sys.exit()
 
-            if game_active:
+            if start_screen:
+                if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+                    start_screen = False
+                    game_active = True
+            elif game_active:
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
                     bird_movement = -9
                     FLAP.play()
@@ -98,7 +104,13 @@ def main():
 
         screen.blit(BACKGROUND, (0, 0))
 
-        if game_active:
+        if start_screen:
+            title_text = font.render("Welcome to Flappy Bird!", True, WHITE)
+            instruction_text = font.render("Press SPACE to Start", True, WHITE)
+            screen.blit(title_text, (WIDTH // 2 - 215, HEIGHT // 2 - 50))
+            screen.blit(instruction_text, (WIDTH // 2 - 195, HEIGHT // 2))
+            screen.blit(TITLE_BIRD,(432,350))
+        elif game_active:
             bird_movement += gravity
             bird.y += int(bird_movement)
             pipe_x -= pipe_speed
@@ -136,6 +148,7 @@ def main():
 
         pygame.display.update()
         clock.tick(60)
+
 
 
 
