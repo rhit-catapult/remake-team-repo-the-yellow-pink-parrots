@@ -1,9 +1,8 @@
 import pygame
 import sys
 import random
-from grass_move_by import Grass
 
-
+# Constants
 WIDTH, HEIGHT = 1200, 620
 BIRD_SIZE_x = 30
 BIRD_SIZE_y = 21
@@ -11,13 +10,16 @@ gravity = 0.5
 pipe_gap = 130
 pipe_speed = 5
 
+# Colors
 DARK_BLUE = (0, 0, 139)
 GREEN = (0, 255, 0)
 WHITE = (255, 255, 255)
 
+# Initialize Pygame
 pygame.init()
 pygame.mixer.init()
 
+# Load Images
 BACKGROUND = pygame.image.load("rose_background.png")
 BACKGROUND = pygame.transform.scale(BACKGROUND, (WIDTH, HEIGHT))
 EMMET1 = pygame.image.load("emmet1.png")
@@ -28,41 +30,28 @@ BUBBLE = pygame.image.load("speech_bubble.png")
 BUBBLE = pygame.transform.scale(BUBBLE, (500, 500))
 TITLE_BIRD = pygame.image.load("pink_bird.png")
 
+# Load Sounds
 FLAP = pygame.mixer.Sound("flap.wav")
 DIE = pygame.mixer.Sound("die.wav")
 
+
 class Grass:
     def __init__(self, screen, x, y):
-        """ Creates a Raindrop sprite that travels down at a random speed. """
-        # TODO 8: Initialize this Raindrop, as follows:
-        #     - Store the screen.
-        #     - Set the initial position of the Raindrop to x and y.
-        #     - Set the initial speed to a random integer between 5 and 15.
-        #   Use instance variables:   screen  x  y  speed.
         self.image1 = pygame.image.load("grass_for_flappy.png")
         self.screen = screen
         self.x = x
         self.y = y
         self.speed = 5
-        self.grass_list = []
-        grass_list = self.grass_list
-
 
     def move(self):
-
-        self.x = self.x - self.speed
-
+        self.x -= self.speed
 
     def off_screen(self):
-        """ Returns true if the Raindrop y value is not shown on the screen, otherwise false. """
         image_length = 384
-        return self.x < 0 - image_length
+        return self.x < -image_length
 
     def draw(self):
-        """ Draws this sprite onto the screen. """
-        # TODO 9: Draw a vertical line that is 5 pixels long, 2 pixels thick,
-        #      from the current position of this Raindrop (use either a black or blue color).
-        self.screen.blit(self.image1, (self.x ,580))
+        self.screen.blit(self.image1, (self.x, self.y))
 
 
 class Bird:
@@ -98,6 +87,10 @@ def check_collision(bird, pipes):
     return True
 
 
+def generate_pipes(count=10, spacing=800):
+    return [[WIDTH + i * spacing, random.randint(150, 450)] for i in range(count)]
+
+
 def main():
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
     pygame.display.set_caption("Flappy Bird")
@@ -110,13 +103,11 @@ def main():
     start_screen = True
     score = 0
 
-    pipe_x = WIDTH
-    pipe_height = random.randint(150, 450)
+    pipes_data = generate_pipes()
 
     grass_list = []
     for i in range(6):
         x = i * 394
-        y = 580
         g = Grass(screen, x, 580)
         grass_list.append(g)
 
@@ -125,7 +116,6 @@ def main():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
-
 
             if start_screen:
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
@@ -138,10 +128,9 @@ def main():
             else:
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
                     bird.y = HEIGHT // 2
-                    pipe_x = WIDTH
-                    pipe_height = random.randint(150, 450)
-                    score = 0
                     bird_movement = 0
+                    score = 0
+                    pipes_data = generate_pipes()
                     game_active = True
 
         screen.blit(BACKGROUND, (0, 0))
@@ -151,26 +140,31 @@ def main():
             instruction_text = font.render("Press SPACE to Start", True, WHITE)
             screen.blit(title_text, (WIDTH // 2 - 215, HEIGHT // 2 - 50))
             screen.blit(instruction_text, (WIDTH // 2 - 195, HEIGHT // 2))
-            screen.blit(TITLE_BIRD,(432,350))
-
+            screen.blit(TITLE_BIRD, (432, 350))
 
         elif game_active:
             bird_movement += gravity
             bird.y += int(bird_movement)
-            pipe_x -= pipe_speed
 
-            if pipe_x + 60 < 0:
-                pipe_x = WIDTH
-                pipe_height = random.randint(150, 450)
+            pipes = []
+            for pipe in pipes_data:
+                pipe[0] -= pipe_speed
+                top_rect, bottom_rect = draw_pipes(screen, pipe[0], pipe[1])
+                pipes.append(top_rect)
+                pipes.append(bottom_rect)
+
+            if pipes_data[0][0] + 60 < 0:
+                pipes_data.pop(0)
+                new_x = pipes_data[-1][0] + 400
+                new_height = random.randint(150, 450)
+                pipes_data.append([new_x, new_height])
                 score += 1
 
-            pipes = draw_pipes(screen, pipe_x, pipe_height)
             bird.draw()
 
-            was_active = game_active
-            game_active = check_collision(bird, pipes)
-            if was_active and not game_active:
+            if not check_collision(bird, pipes):
                 DIE.play()
+                game_active = False
 
             score_text = font.render(f"Score: {score}", True, WHITE)
             screen.blit(score_text, (10, 10))
@@ -180,14 +174,11 @@ def main():
                 g.draw()
 
             if grass_list[0].off_screen():
-                del grass_list[0]
-                x = grass_list[-1].x + 328
-                y = 580
-                new_grass = Grass(screen, x, y)
+                grass_list.pop(0)
+                new_grass = Grass(screen, grass_list[-1].x + 328, 580)
                 grass_list.append(new_grass)
 
         else:
-            # Game over screen
             label_game_over = font.render("GRASS HOLE!", True, WHITE)
             label_restart = font.render("Press Enter to Restart", True, WHITE)
             label_score = font.render(f"Score: {score}", True, WHITE)
@@ -205,8 +196,4 @@ def main():
         clock.tick(60)
 
 
-
-
-
 main()
-
