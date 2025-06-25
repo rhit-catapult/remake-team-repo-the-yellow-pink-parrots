@@ -82,7 +82,7 @@ def check_collision(bird, pipes):
     for pipe in pipes:
         if bird_rect.colliderect(pipe):
             return False
-    if bird_rect.top <= 0 or bird_rect.bottom >= HEIGHT:
+    if bird_rect.top <= 0 or bird_rect.bottom >= HEIGHT - 40:
         return False
     return True
 
