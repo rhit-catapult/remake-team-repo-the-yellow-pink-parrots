@@ -30,6 +30,39 @@ TITLE_BIRD = pygame.image.load("pink_bird.png")
 FLAP = pygame.mixer.Sound("flap.wav")
 DIE = pygame.mixer.Sound("die.wav")
 
+class Grass:
+    def __init__(self, screen, x, y):
+        """ Creates a Raindrop sprite that travels down at a random speed. """
+        # TODO 8: Initialize this Raindrop, as follows:
+        #     - Store the screen.
+        #     - Set the initial position of the Raindrop to x and y.
+        #     - Set the initial speed to a random integer between 5 and 15.
+        #   Use instance variables:   screen  x  y  speed.
+        self.image1 = pygame.image.load("grass_for_flappy.png")
+        self.screen = screen
+        self.x = x
+        self.y = y
+        self.speed = 5
+        self.grass_list = []
+        grass_list = self.grass_list
+
+
+    def move(self):
+
+        self.x = self.x - self.speed
+
+
+    def off_screen(self):
+        """ Returns true if the Raindrop y value is not shown on the screen, otherwise false. """
+        image_length = 384
+        return self.x < 0 - image_length
+
+    def draw(self):
+        """ Draws this sprite onto the screen. """
+        # TODO 9: Draw a vertical line that is 5 pixels long, 2 pixels thick,
+        #      from the current position of this Raindrop (use either a black or blue color).
+        self.screen.blit(self.image1, (self.x ,580))
+
 
 class Bird:
     def __init__(self, screen, x, y, bird_image1):
@@ -79,11 +112,19 @@ def main():
     pipe_x = WIDTH
     pipe_height = random.randint(150, 450)
 
+    grass_list = []
+    for i in range(6):
+        x = i * 394
+        y = 580
+        g = Grass(screen, x, 580)
+        grass_list.append(g)
+
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
+
 
             if start_screen:
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
@@ -110,6 +151,8 @@ def main():
             screen.blit(title_text, (WIDTH // 2 - 215, HEIGHT // 2 - 50))
             screen.blit(instruction_text, (WIDTH // 2 - 195, HEIGHT // 2))
             screen.blit(TITLE_BIRD,(432,350))
+
+
         elif game_active:
             bird_movement += gravity
             bird.y += int(bird_movement)
@@ -130,6 +173,17 @@ def main():
 
             score_text = font.render(f"Score: {score}", True, WHITE)
             screen.blit(score_text, (10, 10))
+
+            for g in grass_list:
+                g.move()
+                g.draw()
+
+            if grass_list[0].off_screen():
+                del grass_list[0]
+                x = grass_list[-1].x + 328
+                y = 580
+                new_grass = Grass(screen, x, y)
+                grass_list.append(new_grass)
 
         else:
             # Game over screen
