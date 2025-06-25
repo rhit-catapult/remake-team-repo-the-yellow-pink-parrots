@@ -8,15 +8,27 @@ def main():
     pygame.init()
 
 
-    pygame.display.set_caption("Hello World")
-    x = 900
 
     screen = pygame.display.set_mode((1200, 620))
+    grass = Grass(screen, 1200, 580)
+    grass2 = Grass(screen, 900, 580)
+    grass3 = Grass(screen, 600, 580)
+    grass4 = Grass(screen, 300, 580)
+    grass5 = Grass(screen, 000, 580)
+
     # TODO 05: Change the window size, make sure your circle code still works.
     while True:
         screen.fill((255, 255, 255))
-        image1 = pygame.image.load("grass_for_flappy.png")
-        screen.blit(image1, (x , 580))
+        grass.draw()
+        grass2.draw()
+        grass3.draw()
+        grass4.draw()
+        grass5.draw()
+        grass.move()
+        grass2.move()
+        grass3.move()
+        grass4.move()
+        grass5.move()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit()
@@ -25,7 +37,7 @@ def main():
         pygame.display.update()
 
 
-class grass:
+class Grass:
     def __init__(self, screen, x, y):
         """ Creates a Raindrop sprite that travels down at a random speed. """
         # TODO 8: Initialize this Raindrop, as follows:
@@ -33,10 +45,11 @@ class grass:
         #     - Set the initial position of the Raindrop to x and y.
         #     - Set the initial speed to a random integer between 5 and 15.
         #   Use instance variables:   screen  x  y  speed.
+        self.image1 = pygame.image.load("grass_for_flappy.png")
         self.screen = screen
         self.x = x
         self.y = y
-        self.speed = (5)
+        self.speed = 5
 
 
     def move(self):
@@ -54,8 +67,7 @@ class grass:
         """ Draws this sprite onto the screen. """
         # TODO 9: Draw a vertical line that is 5 pixels long, 2 pixels thick,
         #      from the current position of this Raindrop (use either a black or blue color).
-        image1 = pygame.image.load("grass_for_flappy.png")
-        self.screen.blit(image1, (900,580))
+        self.screen.blit(self.image1, (self.x ,580))
 
 
 
