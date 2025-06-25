@@ -87,7 +87,7 @@ def check_collision(bird, pipes):
     return True
 
 
-def generate_pipes(count=10, spacing=800):
+def generate_pipes(count=20, spacing=800):
     return [[WIDTH + i * spacing, random.randint(150, 450)] for i in range(count)]
 
 
