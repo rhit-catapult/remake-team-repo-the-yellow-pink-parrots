@@ -8,7 +8,7 @@ WIDTH, HEIGHT = 1200, 620
 BIRD_SIZE_x = 30
 BIRD_SIZE_y = 21
 gravity = 0.5
-pipe_gap = 150
+pipe_gap = 130
 pipe_speed = 5
 
 DARK_BLUE = (0, 0, 139)
