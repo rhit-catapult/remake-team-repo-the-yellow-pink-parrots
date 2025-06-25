@@ -1,6 +1,7 @@
 import pygame
 import sys
 import random
+import time
 
 # Constants
 WIDTH, HEIGHT = 1200, 620
@@ -126,7 +127,8 @@ def main():
                     bird_movement = -9
                     FLAP.play()
             else:
-                if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
+                time.sleep(0.5)
+                if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
                     bird.y = HEIGHT // 2
                     bird_movement = 0
                     score = 0
@@ -180,7 +182,7 @@ def main():
 
         else:
             label_game_over = font.render("GRASS HOLE!", True, WHITE)
-            label_restart = font.render("Press Enter to Restart", True, WHITE)
+            label_restart = font.render("Press Space to Restart", True, WHITE)
             label_score = font.render(f"Score: {score}", True, WHITE)
 
             screen.blit(label_game_over, (WIDTH // 2 - 100, HEIGHT // 2 - 60))
